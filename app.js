@@ -29,6 +29,10 @@ app.get('/test', authRequired, (req, res, next) => {
   res.send('You are authorized')
 })
 
+app.use((error, req, res, next) => {
+  res.status(500).send(error)
+})
+
 app.use((req, res, next) => {
   res.sendFile(path.join(__dirname, './client/build', 'index.html'))
 })

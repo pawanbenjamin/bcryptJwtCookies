@@ -6,10 +6,8 @@ const { JWT_SECRET, COOKIE_SECRET } = require('../secrets')
 const SALT_ROUNDS = 10
 
 authRouter.post('/register', async (req, res, next) => {
-  console.log('HEllo')
   try {
     const { username, password } = req.body
-    console.log(typeof password)
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS)
     const user = await User.createUser({ username, password: hashedPassword })
 

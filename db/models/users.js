@@ -5,10 +5,10 @@ const createUser = async ({ username, password }) => {
     rows: [user],
   } = await pool.query(
     `
-        INSERT INTO users(username, password)
-        VALUES ($1, $2)
-        RETURNING *
-    `,
+          INSERT INTO users(username, password)
+          VALUES ($1, $2)
+          RETURNING *
+      `,
     [username, password]
   )
   return user
