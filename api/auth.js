@@ -22,6 +22,8 @@ authRouter.post('/register', async (req, res, next) => {
       signed: true,
     })
 
+    delete user.password
+
     res.send({ user })
   } catch (error) {
     next(error)
@@ -31,9 +33,9 @@ authRouter.post('/register', async (req, res, next) => {
 authRouter.post('/login', async (req, res, next) => {
   try {
     const { username, password } = req.body
-
+    console.log({ username, password })
     const user = await User.getUserByUsername(username)
-
+    console.log(user)
     const validPassword = await bcrypt.compare(password, user.password)
 
     if (validPassword) {
@@ -44,6 +46,8 @@ authRouter.post('/login', async (req, res, next) => {
         httpOnly: true,
         signed: true,
       })
+
+      delete user.password
 
       res.send({ user })
     }
