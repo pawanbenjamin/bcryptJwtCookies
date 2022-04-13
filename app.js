@@ -29,8 +29,8 @@ app.get('/test', authRequired, (req, res, next) => {
   res.send('You are authorized')
 })
 
-app.get('*', (req, res, next) => {
-  res.status(404).send("Sorry we can't find that page..")
+app.use((req, res, next) => {
+  res.sendFile(path.join(__dirname, './client/build', 'index.html'))
 })
 
 module.exports = app
