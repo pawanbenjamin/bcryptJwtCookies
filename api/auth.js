@@ -28,6 +28,30 @@ authRouter.post('/register', async (req, res, next) => {
   }
 })
 
+authRouter.post('/login', async (req, res, next) => {
+  try {
+    const { username, password } = req.body
+
+    const user = await User.getUserByUsername(username)
+
+    const validPassword = await bcrypt.compare(password, user.password)
+
+    if (validPassword) {
+      const token = jwt.sign(user, JWT_SECRET)
+
+      res.cookie('token', token, {
+        sameSite: 'strict',
+        httpOnly: true,
+        signed: true,
+      })
+
+      res.send({ user })
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
 authRouter.post('/logout', async (req, res, next) => {
   try {
     res.clearCookie('token', {
