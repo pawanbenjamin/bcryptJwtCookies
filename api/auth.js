@@ -21,7 +21,51 @@ authRouter.post('/register', async (req, res, next) => {
       signed: true,
     })
 
+    delete user.password
+
     res.send({ user })
+  } catch (error) {
+    next(error)
+  }
+})
+
+authRouter.post('/login', async (req, res, next) => {
+  try {
+    const { username, password } = req.body
+    console.log({ username, password })
+    const user = await User.getUserByUsername(username)
+    console.log(user)
+    const validPassword = await bcrypt.compare(password, user.password)
+
+    if (validPassword) {
+      const token = jwt.sign(user, JWT_SECRET)
+
+      res.cookie('token', token, {
+        sameSite: 'strict',
+        httpOnly: true,
+        signed: true,
+      })
+
+      delete user.password
+
+      res.send({ user })
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
+authRouter.post('/logout', async (req, res, next) => {
+  try {
+    res.clearCookie('token', {
+      sameSite: 'strict',
+      httpOnly: true,
+      signed: true,
+    })
+    res.send({
+      loggedIn: false,
+      message: 'Logged Out',
+    })
   } catch (error) {
     next(error)
   }
