@@ -10,13 +10,13 @@
 #### To try to set it up yourself
 ```git checkout startingPoint``` to try and build it yourself!
 
-#### Also...
+### Also...
 
 There is a branch `git checkout reactFrontEnd`, which shows you how to add
 a react-app inside of our repository, and use express to serve the build folder
 in production
 
-###### If you do this...
+##### If you do this...
 ...make sure to run ```npm run build``` first, becuase that is what's getting served in our express app
 
 #### httpOnly
