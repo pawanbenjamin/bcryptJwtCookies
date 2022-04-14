@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, './client', 'build')))
 
 app.use('/api', require('./api'))
 
-app.get('/test', authRequired, (req, res, next) => {
+app.get('/authTest', authRequired, (req, res, next) => {
   res.send('You are authorized')
 })
 
