@@ -57,7 +57,7 @@ authRouter.post('/login', async (req, res, next) => {
   }
 })
 
-authRouter.post('/logout', async (req, res, next) => {
+authRouter.get('/logout', async (req, res, next) => {
   try {
     res.clearCookie('token', {
       sameSite: 'strict',
