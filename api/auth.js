@@ -2,7 +2,9 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const authRouter = require('express').Router()
 const { User } = require('../db/models')
-const { JWT_SECRET, COOKIE_SECRET } = require('../secrets')
+const { getUserByUsername } = require('../db/models/users')
+const { JWT_SECRET } = require('../secrets')
+const { authRequired } = require('./utils')
 const SALT_ROUNDS = 10
 
 authRouter.post('/register', async (req, res, next) => {
@@ -32,9 +34,10 @@ authRouter.post('/register', async (req, res, next) => {
 authRouter.post('/login', async (req, res, next) => {
   try {
     const { username, password } = req.body
-    console.log({ username, password })
+
     const user = await User.getUserByUsername(username)
-    console.log(user)
+
+    // This is a boolean
     const validPassword = await bcrypt.compare(password, user.password)
 
     if (validPassword) {
@@ -66,6 +69,16 @@ authRouter.post('/logout', async (req, res, next) => {
       loggedIn: false,
       message: 'Logged Out',
     })
+  } catch (error) {
+    next(error)
+  }
+})
+
+authRouter.post('/me', authRequired, async (req, res, next) => {
+  try {
+    const { username } = req.body
+    const user = await getUserByUsername(username)
+    res.send(user)
   } catch (error) {
     next(error)
   }

@@ -1,11 +1,13 @@
 const jwt = require('jsonwebtoken')
 const { JWT_SECRET } = require('../secrets')
 
-const authRequired = (req, res, next) => {
+const authRequired = async (req, res, next) => {
   const token = req.signedCookies.token
   console.log('Cookie Token:', token)
   try {
-    jwt.verify(token, JWT_SECRET)
+    const user = await jwt.verify(token, JWT_SECRET)
+    req.user = user
+    console.log('Req.user:', req.user)
   } catch (error) {
     res.status(401).send({
       loggedIn: false,
