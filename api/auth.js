@@ -76,7 +76,7 @@ authRouter.post('/logout', async (req, res, next) => {
 authRouter.post('/me', authRequired, async (req, res, next) => {
   try {
     const { username } = req.body
-    const user = await getUserByUsername(username)
+    const user = await User.getUserByUsername(username)
     res.send(user)
   } catch (error) {
     next(error)
