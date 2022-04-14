@@ -2,7 +2,6 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const authRouter = require('express').Router()
 const { User } = require('../db/models')
-const { getUserByUsername } = require('../db/models/users')
 const { JWT_SECRET } = require('../secrets')
 const { authRequired } = require('./utils')
 const SALT_ROUNDS = 10
