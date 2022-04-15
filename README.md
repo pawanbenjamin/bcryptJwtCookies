@@ -17,7 +17,7 @@ a react-app inside of our repository, and use express to serve the build folder
 in production
 
 ##### If you do this...
-...make sure to run ```npm run build``` first, becuase that is what's getting served in our express app
+...you can also run ```npm run build```  and test out the build version at PORT=5000
 
 #### httpOnly
 
