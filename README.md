@@ -7,8 +7,8 @@
 3. To seed the database run `npm run seed`
 4. To start the server run `npm run start:dev`
 
-#### To try to set it up yourself
-```git checkout startingPoint``` to try and build it yourself!
+#### To set it up yourself
+```git checkout startingPoint``` and give it a try!
 
 ### Also...
 
